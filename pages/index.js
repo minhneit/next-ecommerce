@@ -1,20 +1,20 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+/* eslint-disable @next/next/no-img-element */
+import { useSession } from 'next-auth/react';
+import Layout from '~/components/Layout,';
 
 export default function Home() {
-  const { data: session } = useSession();
-  if (!session) {
+    const { data: session } = useSession();
     return (
-      <div className="bg-blue-900 h-screen w-screen flex justify-center items-center">
-        <div className="text-center w-full">
-          <button
-            onClick={() => signIn("google")}
-            className="bg-white p-2 px-4 rounded-lg"
-          >
-            Login with Google
-          </button>
-        </div>
-      </div>
+        <Layout>
+            <div className="text-blue-900 flex justify-between">
+                <h2>
+                    Hello, <b>{session?.user?.email}</b>
+                </h2>
+                <div className="flex gap-1 items-center bg-gray-300 text-black p-2 rounded-lg">
+                    <img src={session?.user?.image} alt="" className="w-8 h-8 rounded-full" />
+                    <span className="px-2 font-semibold font-roboto"> {session?.user?.name}</span>
+                </div>
+            </div>
+        </Layout>
     );
-  }
-  return <div>Logged in {session.user.email}</div>;
 }
